@@ -142,10 +142,15 @@ export type AnyFunction = (...args: any[]) => any;
  *
  * type UndefinedProps = 'id' | 'createdAt' | 'firstName';
  */
+
+/**
+ * this is where the fork changes are. We are using the type definition that was
+ * present for type UndefinedPropertiesOf in
+ * https://github.com/sequelize/sequelize/pull/14147/files, since that allows ts
+ * to show errors when we do not give all required fields on Model.create.
+ */
 export type NullishPropertiesOf<T> = {
-  [P in keyof T]-?: undefined extends T[P] ? P
-    : null extends T[P] ? P
-    : never
+  [P in keyof T]-?: undefined extends T[P] ? P : never;
 }[keyof T];
 
 /**
